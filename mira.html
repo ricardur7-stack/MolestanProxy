@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VETRIX - Mira</title>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,Arial;}
+body{background:#000;color:#fff;}
+
+header{
+  text-align:center;
+  padding:20px;
+  font-size:26px;
+  color:#ff1a1a;
+  text-shadow:0 0 20px red;
+}
+
+/* TABS */
+.tabs{display:flex;gap:10px;padding:10px;}
+.tab{
+  flex:1;
+  padding:12px;
+  border-radius:18px;
+  background:#0a0a0a;
+  text-align:center;
+  color:#777;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.tab.active{
+  color:red;
+  box-shadow:0 0 20px red;
+}
+
+/* CARD */
+.card{
+  margin:15px;
+  padding:20px;
+  border-radius:20px;
+  background:#050505;
+  border:1px solid #111;
+}
+
+/* ITEM */
+.item{
+  padding:15px;
+  border-radius:15px;
+  background:#0f0f0f;
+  border:1px solid #222;
+  margin-bottom:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.item-text{max-width:75%;}
+
+.item-title{
+  font-size:15px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.item-title i{
+  width:18px;
+  height:18px;
+  color:red;
+}
+
+.item-desc{
+  font-size:12px;
+  color:#888;
+  margin-top:3px;
+}
+
+/* SWITCH */
+.switch{
+  width:40px;
+  height:22px;
+  background:#222;
+  border-radius:20px;
+  position:relative;
+  cursor:pointer;
+}
+
+.switch::after{
+  content:'';
+  position:absolute;
+  width:18px;
+  height:18px;
+  background:#555;
+  border-radius:50%;
+  top:2px;
+  left:2px;
+  transition:0.2s;
+}
+
+.switch.active{
+  background:red;
+}
+
+.switch.active::after{
+  left:20px;
+  background:#fff;
+}
+
+/* BUTTON */
+.btn{
+  width:100%;
+  padding:16px;
+  border-radius:15px;
+  border:none;
+  font-weight:bold;
+  background:linear-gradient(90deg,#ff0000,#660000);
+  color:#fff;
+  margin-top:10px;
+}
+
+/* PROGRESS */
+.progress-bar{
+  height:6px;
+  background:#222;
+  border-radius:10px;
+  margin:10px 0;
+  overflow:hidden;
+}
+
+.progress{
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,#ff0000,#ff6600);
+}
+
+.status{
+  display:flex;
+  justify-content:space-between;
+  font-size:13px;
+  color:#ff6600;
+}
+</style>
+</head>
+
+<body>
+
+<header>VETRIX</header>
+
+<div class="tabs">
+  <div class="tab" onclick="go('index.html')">
+    <i data-lucide="zap"></i>
+    <span>Performance</span>
+  </div>
+  <div class="tab active">
+    <i data-lucide="crosshair"></i>
+    <span>Mira</span>
+  </div>
+  <div class="tab" onclick="go('sensi.html')">
+    <i data-lucide="sparkles"></i>
+    <span>Sensi</span>
+  </div>
+</div>
+
+<div class="card">
+
+  <!-- ITENS -->
+  <div class="item">
+    <div class="item-text">
+      <div class="item-title"><i data-lucide="sliders"></i> Calibrar Sensibilidade</div>
+      <div class="item-desc" id="status1">Ative para ter a mira perfeita</div>
+    </div>
+    <div class="switch" onclick="toggle(this,'status1','Calibrando sensibilidade')"></div>
+  </div>
+
+  <div class="item">
+    <div class="item-text">
+      <div class="item-title"><i data-lucide="shield"></i> Reduzir Recuo</div>
+      <div class="item-desc" id="status2">Estabiliza a arma para disparos precisos</div>
+    </div>
+    <div class="switch" onclick="toggle(this,'status2','Reduzindo recuo')"></div>
+  </div>
+
+  <div class="item">
+    <div class="item-text">
+      <div class="item-title"><i data-lucide="target"></i> Aumentar Precisão</div>
+      <div class="item-desc" id="status3">Diminui a dispersão dos tiros em 50%</div>
+    </div>
+    <div class="switch" onclick="toggle(this,'status3','Aumentando precisão')"></div>
+  </div>
+
+  <div class="item">
+    <div class="item-text">
+      <div class="item-title"><i data-lucide="zap"></i> Retirar Input Lag</div>
+      <div class="item-desc" id="status4">Melhora o tempo de resposta do toque</div>
+    </div>
+    <div class="switch" onclick="toggle(this,'status4','Removendo input lag')"></div>
+  </div>
+
+  <!-- LOADING DO BOTÃO -->
+  <div id="applyBox" style="display:none;">
+    <div class="progress-bar">
+      <div class="progress" id="applyBar"></div>
+    </div>
+    <div class="status">
+      <span id="applyStatus">Iniciando...</span>
+      <span id="applyPercent">0%</span>
+    </div>
+  </div>
+
+  <button class="btn" onclick="applyAll()">APLICAR AJUSTES</button>
+
+</div>
+
+<script>
+function go(p){location.href=p;}
+
+function toggle(el, statusId, text){
+  let status = document.getElementById(statusId);
+
+  el.classList.toggle("active");
+
+  if(el.classList.contains("active")){
+    status.innerText = text + "...";
+    status.style.color = "#ff6600";
+  } else {
+    status.innerText = "Desativando...";
+    status.style.color = "#ff6600";
+  }
+
+  setTimeout(()=>{
+    if(el.classList.contains("active")){
+      status.innerText = "✔ Ativado";
+      status.style.color = "#00ff66";
+    } else {
+      status.innerText = "✖ Desativado";
+      status.style.color = "#ff4444";
+    }
+  },800);
+}
+
+function applyAll(){
+  let box = document.getElementById("applyBox");
+  let bar = document.getElementById("applyBar");
+  let percent = document.getElementById("applyPercent");
+  let status = document.getElementById("applyStatus");
+
+  box.style.display = "block";
+
+  let p = 0;
+
+  let steps = [
+    "Aplicando configurações...",
+    "Ajustando sistema...",
+    "Otimizando mira...",
+    "Finalizando..."
+  ];
+
+  let i = setInterval(()=>{
+    p += Math.floor(Math.random()*7)+3;
+    if(p > 100) p = 100;
+
+    bar.style.width = p + "%";
+    percent.innerText = p + "%";
+
+    if(p < 30) status.innerText = steps[0];
+    else if(p < 60) status.innerText = steps[1];
+    else if(p < 90) status.innerText = steps[2];
+    else status.innerText = steps[3];
+
+    if(p === 100){
+      clearInterval(i);
+      status.innerText = "✔ Ajustes aplicados";
+      status.style.color = "#00ff66";
+    }
+  },200);
+}
+
+lucide.createIcons();
+</script>
+
+</body>
+</html>

@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>VETRIX</title>
 
 <script src="https://unpkg.com/lucide@latest"></script>
@@ -42,13 +43,35 @@ header{
   border:1px solid red;
   box-shadow:0 0 20px rgba(255,0,0,0.5);
 }
-.tab i{width:22px;height:22px;color:#ff2a2a;font-size:22px;}
+.tab i{width:22px;height:22px;color:#ff2a2a;}
 .tab span{font-size:13px;}
 
 /* CARD */
-.card{margin:15px;padding:20px;border-radius:20px;background:#050505;border:1px solid #111;}
-.title{font-size:18px;margin-bottom:5px;}
-.desc{color:#888;font-size:14px;margin-bottom:10px;}
+.card{
+  margin:15px;
+  padding:20px;
+  border-radius:20px;
+  background:#050505;
+  border:1px solid #111;
+}
+
+.title{
+  font-size:18px;
+  margin-bottom:5px;
+  display:flex;
+  align-items:center;
+}
+
+.title i{
+  margin-right:8px;
+  color:red;
+}
+
+.desc{
+  color:#888;
+  font-size:14px;
+  margin-bottom:12px;
+}
 
 /* BUTTON */
 .btn{
@@ -62,20 +85,42 @@ header{
 }
 
 /* PROGRESS */
-.progress-bar{height:6px;background:#222;border-radius:10px;margin:8px 0;overflow:hidden;}
-.progress{width:0%;height:100%;background:linear-gradient(90deg,#ff0000,#ff6600);}
+.progress-bar{
+  height:6px;
+  background:#222;
+  border-radius:10px;
+  margin:8px 0;
+  overflow:hidden;
+}
+.progress{
+  width:0%;
+  height:100%;
+  background:linear-gradient(90deg,#ff0000,#ff6600);
+}
 
-.status{display:flex;justify-content:space-between;font-size:13px;color:#ff6600;}
+.status{
+  display:flex;
+  justify-content:space-between;
+  font-size:13px;
+  color:#ff6600;
+  margin-bottom:10px;
+}
 
+/* FPS */
 .fps{display:flex;gap:10px;}
 .fps div{
-  flex:1;padding:15px;border-radius:15px;border:1px solid #222;text-align:center;color:#aaa;
+  flex:1;
+  padding:15px;
+  border-radius:15px;
+  border:1px solid #222;
+  text-align:center;
+  color:#aaa;
 }
 .fps div.active{
-  border:1px solid red;color:red;box-shadow:0 0 15px red;
+  border:1px solid red;
+  color:red;
+  box-shadow:0 0 15px red;
 }
-
-i{margin-right:5px;color:red;}
 </style>
 </head>
 
@@ -83,6 +128,7 @@ i{margin-right:5px;color:red;}
 
 <header>VETRIX</header>
 
+<!-- TABS -->
 <div class="tabs-wrapper">
   <div class="tabs">
     <div class="tab active" onclick="go('index.html')">
@@ -102,17 +148,22 @@ i{margin-right:5px;color:red;}
 
 <!-- PING -->
 <div class="card">
-  <div class="title">Melhorar Ping</div>
+  <div class="title"><i data-lucide="wifi"></i>Melhorar Ping</div>
+  <div class="desc">Reduz a latência e melhora a conexão durante a partida.</div>
+
   <div id="pingBox" style="display:none;">
     <div class="progress-bar"><div class="progress" id="pingBar"></div></div>
     <div class="status"><span id="pingStatus"></span><span id="pingPercent">0%</span></div>
   </div>
+
   <button class="btn" onclick="startPing()">ATIVAR</button>
 </div>
 
 <!-- FPS -->
 <div class="card">
-  <div class="title">Aumentar FPS</div>
+  <div class="title"><i data-lucide="monitor"></i>Aumentar FPS</div>
+  <div class="desc">Aumenta a taxa de quadros e deixa o jogo mais fluido.</div>
+
   <div class="fps">
     <div onclick="startFPS(this,60)">60</div>
     <div onclick="startFPS(this,120)">120</div>
@@ -127,7 +178,8 @@ i{margin-right:5px;color:red;}
 
 <!-- OTIMIZAÇÃO -->
 <div class="card">
-  <div class="title">Otimização</div>
+  <div class="title"><i data-lucide="rocket"></i>Otimização do Sistema</div>
+  <div class="desc">Limpeza profunda e melhoria de desempenho geral.</div>
 
   <div id="optBox" style="display:none;">
     <div class="progress-bar"><div class="progress" id="optBar"></div></div>

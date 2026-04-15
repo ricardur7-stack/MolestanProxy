@@ -1,170 +1,179 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VETRIX SENSI</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sabor Fanta Sensi</title>
 
-<style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #000;
-  color: #fff;
-  text-align: center;
-}
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
 
-/* Título */
-.title {
-  font-size: 40px;
-  font-weight: bold;
-  margin-top: 40px;
-  background: linear-gradient(90deg, orange, red);
-  -webkit-background-clip: text;
-  color: transparent;
-}
+    body {
+      background: #000;
+      color: #fff;
+    }
 
-/* Botões de aba */
-.tabs {
-  margin-top: 30px;
-}
+    header {
+      text-align: center;
+      padding: 20px;
+      font-size: 22px;
+      font-weight: bold;
+      color: #ff7a00;
+    }
 
-.tabs button {
-  padding: 10px 20px;
-  margin: 5px;
-  border: none;
-  border-radius: 10px;
-  background: #111;
-  color: orange;
-  cursor: pointer;
-}
+    .tabs {
+      display: flex;
+      gap: 10px;
+      padding: 0 15px 15px;
+    }
 
-.tabs button.active {
-  background: orange;
-  color: black;
-}
+    .tab {
+      flex: 1;
+      padding: 10px;
+      border-radius: 12px;
+      border: 1px solid #333;
+      text-align: center;
+      cursor: pointer;
+      color: #aaa;
+    }
 
-/* Conteúdo */
-.content {
-  margin-top: 30px;
-  display: none;
-}
+    .tab.active {
+      background: #1a1a1a;
+      border: 1px solid #ff7a00;
+      color: #ff7a00;
+    }
 
-.active-content {
-  display: block;
-}
+    .container {
+      padding: 15px;
+    }
 
-/* Botão principal */
-.main-btn {
-  padding: 15px 50px;
-  border-radius: 15px;
-  border: none;
-  background: linear-gradient(135deg, orange, red);
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 20px;
-}
+    .card {
+      background: #0d0d0d;
+      border: 1px solid #222;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
 
-/* Card */
-.card {
-  background: #111;
-  padding: 20px;
-  margin: 20px;
-  border-radius: 15px;
-}
+    .card h2 {
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
 
-/* Inputs */
-input {
-  padding: 10px;
-  border-radius: 10px;
-  border: none;
-  margin: 5px;
-}
-</style>
+    .card p {
+      color: #888;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 15px;
+      border-radius: 12px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      background: linear-gradient(90deg, #ff7a00, #ff9900);
+      color: #000;
+      transition: 0.2s;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .fps-options {
+      display: flex;
+      gap: 10px;
+    }
+
+    .fps {
+      flex: 1;
+      padding: 15px;
+      border-radius: 12px;
+      border: 1px solid #333;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .fps.active {
+      border: 1px solid #ff7a00;
+      color: #ff7a00;
+    }
+
+    footer {
+      text-align: center;
+      color: #666;
+      font-size: 12px;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="title">VETRIX SENSI</div>
+  <header>SABOR FANTA SENSI</header>
 
-<div class="tabs">
-  <button onclick="openTab('home')" class="active">Home</button>
-  <button onclick="openTab('sensi')">Gerar Sensi</button>
-  <button onclick="openTab('config')">Config</button>
-</div>
-
-<!-- HOME -->
-<div id="home" class="content active-content">
-  <div class="card">
-    <h2>Bem-vindo</h2>
-    <p>"a evolução da sensi não tem limites"</p>
-    <button class="main-btn" onclick="openTab('sensi')">INICIAR</button>
+  <div class="tabs">
+    <div class="tab active">Performance</div>
+    <div class="tab">Melhorar a Mira</div>
+    <div class="tab">Gerar Sensi</div>
   </div>
-</div>
 
-<!-- SENSI -->
-<div id="sensi" class="content">
-  <div class="card">
-    <h2>Gerador de Sensibilidade</h2>
-    <button class="main-btn" onclick="gerarSensi()">GERAR</button>
+  <div class="container">
 
-    <p id="resultado"></p>
+    <!-- Melhorar Ping -->
+    <div class="card">
+      <h2>📶 Melhorar Ping</h2>
+      <p>Reduza a latência da conexão</p>
+      <button class="btn" onclick="ativarPing()">ATIVAR</button>
+    </div>
+
+    <!-- FPS -->
+    <div class="card">
+      <h2>🖥️ Aumentar FPS</h2>
+      <p>Selecione a taxa de quadros</p>
+
+      <div class="fps-options">
+        <div class="fps" onclick="selectFPS(this,60)">60 FPS</div>
+        <div class="fps" onclick="selectFPS(this,120)">120 FPS</div>
+        <div class="fps" onclick="selectFPS(this,240)">240 FPS</div>
+      </div>
+    </div>
+
+    <!-- Otimização -->
+    <div class="card">
+      <h2>🚀 Otimização do Jogo</h2>
+      <p>Limpeza completa do sistema</p>
+      <button class="btn" onclick="otimizar()">OTIMIZAR AGORA</button>
+    </div>
+
+    <footer>
+      Aplicativo de simulação e personalização visual de configurações.
+    </footer>
+
   </div>
-</div>
 
-<!-- CONFIG -->
-<div id="config" class="content">
-  <div class="card">
-    <h2>Configurações</h2>
+  <script>
+    function ativarPing() {
+      alert("Ping otimizado com sucesso!");
+    }
 
-    <input type="number" id="dpi" placeholder="DPI">
-    <input type="number" id="fps" placeholder="FPS">
+    function otimizar() {
+      alert("Sistema otimizado!");
+    }
 
-    <br>
-
-    <button class="main-btn" onclick="aplicarConfig()">APLICAR</button>
-
-    <p id="status"></p>
-  </div>
-</div>
-
-<script>
-function openTab(tab) {
-  document.querySelectorAll('.content').forEach(el => el.classList.remove('active-content'));
-  document.querySelectorAll('.tabs button').forEach(btn => btn.classList.remove('active'));
-
-  document.getElementById(tab).classList.add('active-content');
-  event.target.classList.add('active');
-}
-
-// GERAR SENSI
-function gerarSensi() {
-  let sensi = {
-    geral: Math.floor(Math.random() * 100),
-    redDot: Math.floor(Math.random() * 100),
-    x2: Math.floor(Math.random() * 100),
-    x4: Math.floor(Math.random() * 100),
-    awm: Math.floor(Math.random() * 100)
-  };
-
-  document.getElementById("resultado").innerHTML = `
-    Geral: ${sensi.geral} <br>
-    Red Dot: ${sensi.redDot} <br>
-    2x: ${sensi.x2} <br>
-    4x: ${sensi.x4} <br>
-    AWM: ${sensi.awm}
-  `;
-}
-
-// CONFIG
-function aplicarConfig() {
-  let dpi = document.getElementById("dpi").value;
-  let fps = document.getElementById("fps").value;
-
-  document.getElementById("status").innerText =
-    "Config aplicada! DPI: " + dpi + " | FPS: " + fps;
-}
-</script>
+    function selectFPS(el, fps) {
+      document.querySelectorAll('.fps').forEach(f => f.classList.remove('active'));
+      el.classList.add('active');
+      alert("FPS selecionado: " + fps);
+    }
+  </script>
 
 </body>
 </html>
